@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dinner Invite</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+      animation: zoomIn 1s ease;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-yes { background: #4CAF50; color: white; }
+    .btn-definitely { background: #ff9800; color: white; }
+    .btn:hover { transform: scale(1.05); }.drinks {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+.drinks a {
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #eee;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+}
+.drinks a:hover {
+  background: #ddd;
+  transform: scale(1.05);
+}
+
+#specialMsg {
+  font-size: 20px;
+  color: #444;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Dinner Invite for Madamji 💌</h1>
+    <p>Would you join me for a cozy dinner?<br><b>Shrimp Pasta</b> is on the menu 🍤🍝<br>
+    📅 <b>4th September</b> | 🕢 <b>7:30 PM</b></p><div class="btn-container">
+  <button class="btn btn-yes" onclick="confettiYes()">🎉 Yes</button>
+  <button class="btn btn-definitely" onclick="confettiDefinitely()">✨ Definitely Yes</button>
+</div>
+
+<div class="drinks">
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Wine+%F0%9F%8D%B7" target="_blank">🍷 Wine</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Masala+Lemonade+%F0%9F%8D%8B" target="_blank">🍋 Lemonade</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=__other_option__&entry.368911798.other_option_response=Xyz" target="_blank">✍️ Other</a>
+</div>
+
+<p id="specialMsg">✨ Can’t wait for tomorrow ✨</p>
+
+  </div>  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>  <script>
+    function confettiYes() {
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+    }
+
+    function confettiDefinitely() {
+      const duration = 2000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#FFD700', '#FFFACD']
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#FFD700', '#FFFACD']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        } else {
+          let msg = document.getElementById("specialMsg");
+          msg.style.opacity = 1;
+          setTimeout(() => { msg.style.opacity = 0; }, 4000);
+        }
+      }());
+    }
+  </script></body>
+</html>
