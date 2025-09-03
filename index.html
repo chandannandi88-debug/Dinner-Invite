@@ -1,123 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dinner Invite</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #fff8f0;
       margin: 0;
-      padding: 40px;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .options {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin-top: 30px;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
     }
-    .option {
-      text-decoration: none;
-      font-size: 1.2rem;
-      background: #f0f0f0;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    .option:hover {
-      transform: scale(1.1);
-      background: #ffe8d6;
-    }
-    .fade-message {
-      opacity: 0;
-      transition: opacity 2s ease-in-out;
-      margin-top: 40px;
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-    canvas {
+
+    #overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      transform: scale(0.8);
+      opacity: 0;
+      animation: zoomIn 1s ease forwards;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      margin: 10px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .yes { background: #ff7e5f; color: white; }
+
+    #menu {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fff8f0;
+      border-radius: 12px;
+      display: none;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .drinks {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+    }
+
+    .drink-card {
+      flex: 1;
+      margin: 5px;
+      padding: 15px;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      text-align: center;
+    }
+
+    .drink-card:hover {
+      transform: scale(1.05);
+      background: #fef2f2;
+    }
+
+    .drink-card span {
+      font-size: 2em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       pointer-events: none;
+      z-index: 999;
     }
   </style>
 </head>
 <body>
-  <h1>What would you like to have with dinner?</h1>
 
-  <div class="options">
-    <a class="option" id="wine" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Wine+%F0%9F%8D%B7">
-      🍷 Wine
-    </a>
-    <a class="option" id="lemonade" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Masala+Lemonade+%F0%9F%8D%8B">
-      🍋 Masala Lemonade
-    </a>
+<canvas id="confetti-canvas"></canvas>
+
+<div id="overlay">
+  <div class="card">
+    <h1>Madamji, would you like to have dinner at my place? 🍽️</h1>
+    <button class="yes" onclick="sayYes()">Yes 💕</button>
+    <button class="yes" onclick="sayYes()">Definitely Yes 😍</button>
+
+    <div id="menu">
+      <h2>Menu for the Evening</h2>
+      <p>🍤 Shrimp Pasta</p>
+      <p>🥂 Please pick your drink:</p>
+      <div class="drinks">
+        <div class="drink-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Wine+%F0%9F%8D%B7', '_blank')">
+          <span>🍷</span>
+          Wine
+        </div>
+        <div class="drink-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Masala+Lemonade+%F0%9F%8D%8B', '_blank')">
+          <span>🍋</span>
+          Masala Lemonade
+        </div>
+        <div class="drink-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=__other_option__&entry.368911798.other_option_response=Xyz', '_blank')">
+          <span>✍️</span>
+          Other
+        </div>
+      </div>
+      <p style="margin-top: 15px;">📅 Date: 4th September</p>
+      <p>⏰ Time: 7:30 PM</p>
+    </div>
   </div>
+</div>
 
-  <div class="fade-message" id="message">✨ Looking forward to it! ✨</div>
-  <canvas id="confetti"></canvas>
+<audio id="chime" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
 
-  <script>
-    const message = document.getElementById("message");
-    const canvas = document.getElementById("confetti");
-    const ctx = canvas.getContext("2d");
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  window.onload = () => {
+    document.getElementById("chime").play();
+  };
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  function sayYes() {
+    document.getElementById("menu").style.display = "block";
+    launchConfetti();
+  }
 
-    function showMessage() {
-      message.style.opacity = 1;
-    }
+  function launchConfetti() {
+    const duration = 2 * 1000;
+    const end = Date.now() + duration;
 
-    // Simple sparkles
-    let particles = [];
-    function createSparkles(color) {
-      particles = [];
-      for (let i = 0; i < 100; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 3 + 2,
-          speedY: Math.random() * 2 + 1,
-          color: color,
-        });
-      }
-    }
-
-    function drawSparkles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        p.y += p.speedY;
-        if (p.y > canvas.height) p.y = 0;
+    (function frame() {
+      confetti({
+        particleCount: 5,
+        spread: 70,
+        origin: { y: 0.6 }
       });
-      requestAnimationFrame(drawSparkles);
-    }
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+  }
+</script>
 
-    document.getElementById("wine").addEventListener("click", () => {
-      createSparkles("gold");
-      drawSparkles();
-      showMessage();
-    });
-
-    document.getElementById("lemonade").addEventListener("click", () => {
-      createSparkles("lightblue");
-      drawSparkles();
-      showMessage();
-    });
-  </script>
 </body>
 </html>
