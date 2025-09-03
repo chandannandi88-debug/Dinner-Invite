@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dinner Invite</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fff8f0;
+      margin: 0;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .option {
+      text-decoration: none;
+      font-size: 1.2rem;
+      background: #f0f0f0;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      min-width: 140px;
+    }
+    .option:hover {
+      transform: scale(1.1);
+      background: #ffe8d6;
+    }
+    .fade-message {
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      margin-top: 40px;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>What would you like to have with dinner?</h1>
+
+  <div class="options">
+    <a class="option" id="wine" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Wine+%F0%9F%8D%B7">
+      🍷 Wine
+    </a>
+    <a class="option" id="lemonade" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Masala+Lemonade+%F0%9F%8D%8B">
+      🍋 Masala Lemonade
+    </a>
+    <a class="option" id="other" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=__other_option__&entry.368911798.other_option_response=Xyz">
+      ✨ Other Option
+    </a>
+  </div>
+
+  <div class="fade-message" id="message">✨ Looking forward to it! ✨</div>
+  <canvas id="confetti"></canvas>
+
+  <script>
+    const message = document.getElementById("message");
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function showMessage() {
+      message.style.opacity = 1;
+    }
+
+    // Simple sparkles
+    let particles = [];
+    function createSparkles(color) {
+      particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 3 + 2,
+          speedY: Math.random() * 2 + 1,
+          color: color,
+        });
+      }
+    }
+
+    function drawSparkles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        p.y += p.speedY;
+        if (p.y > canvas.height) p.y = 0;
+      });
+      requestAnimationFrame(drawSparkles);
+    }
+
+    document.getElementById("wine").addEventListener("click", () => {
+      createSparkles("gold");
+      drawSparkles();
+      showMessage();
+    });
+
+    document.getElementById("lemonade").addEventListener("click", () => {
+      createSparkles("lightblue");
+      drawSparkles();
+      showMessage();
+    });
+
+    document.getElementById("other").addEventListener("click", () => {
+      createSparkles("violet");
+      drawSparkles();
+      showMessage();
+    });
+  </script>
+</body>
+</html>
