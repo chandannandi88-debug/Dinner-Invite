@@ -21,7 +21,6 @@
       justify-content: center;
       gap: 30px;
       margin-top: 30px;
-      flex-wrap: wrap;
     }
     .option {
       text-decoration: none;
@@ -31,7 +30,6 @@
       border-radius: 15px;
       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
       transition: transform 0.2s;
-      min-width: 140px;
     }
     .option:hover {
       transform: scale(1.1);
@@ -63,9 +61,6 @@
     </a>
     <a class="option" id="lemonade" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=Masala+Lemonade+%F0%9F%8D%8B">
       🍋 Masala Lemonade
-    </a>
-    <a class="option" id="other" href="https://docs.google.com/forms/d/e/1FAIpQLScDFUj-wY9xwwlM_q42f8-P66MMQHZqrJA01OocgH3dBOu9cQ/viewform?usp=pp_url&entry.368911798=__other_option__&entry.368911798.other_option_response=Xyz">
-      ✨ Other Option
     </a>
   </div>
 
@@ -120,12 +115,6 @@
 
     document.getElementById("lemonade").addEventListener("click", () => {
       createSparkles("lightblue");
-      drawSparkles();
-      showMessage();
-    });
-
-    document.getElementById("other").addEventListener("click", () => {
-      createSparkles("violet");
       drawSparkles();
       showMessage();
     });
